@@ -22,6 +22,11 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa";
+import { IoGiftOutline } from "react-icons/io5";
+import { IoIosStats } from "react-icons/io";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { FaArrowDown } from "react-icons/fa6";
+
 import { Link, Outlet, Route, Routes, useLocation } from "react-router";
 import { useEffect, useMemo, useState } from "react";
 import PayFlow_v1 from "./PayFlow";
@@ -52,6 +57,10 @@ const icons = {
   mail: <IoMail />,
   right: <FaArrowRight />,
   up: <FaArrowUp />,
+  down: <FaArrowDown />,
+  gift: <IoGiftOutline />,
+  stat: <IoIosStats />,
+  checker: <IoMdCheckmarkCircleOutline />,
 };
 //#endregion
 
@@ -357,38 +366,239 @@ function Home() {
       <div
         id="remainder-slip"
         style={{ "--i": 1 }}
-        className={`flex rounded-[5px] gap-2 border px-10 py-4 text-[14px] text-[--remainder] ${!error ? " border-(--amber) bg-(--amber-lt) text-(--remainder)" : "bg-[#ff000060] border-red-500"}`}
+        className={`flex items-center justify-between transform hover:translate-y-[-5px] hover:bg-[#ffa6003b] rounded-[5px] border px-10 py-4 text-[13px] ${!error ? " border-(--amber) bg-(--amber-lt) text-(--remainder)" : "bg-[#ff000060] border-red-500"}`}
       >
-        <span id="title" className="font-bold">
-          Remainder:
-        </span>
-        {loading ? (
-          <span>Loading...</span>
-        ) : error ? (
-          <span>{error}</span>
-        ) : (
-          <span>
-            <span id="payment-name">{remainderData["due-payment-name"]}</span>
-            &nbsp;of&nbsp;
-            <span id="payment-currency-type" className="font-bold">
-              {remainderData["currency-type"]}
-            </span>
-            <span id="payment-amount">
-              {parseInt(remainderData["due-amount"]).toLocaleString()}
-            </span>
-            &nbsp;is due in&nbsp;
-            <span id="due-days-left">{remainderData["due-days-left"]}</span>
-            &nbsp;days. Ensure sufficient wallet balance to avoid failed
-            payments.
+        <div className="flex gap-2">
+          <span id="title" className="font-bold">
+            Remainder:
           </span>
-        )}
+          {loading ? (
+            <span>Loading...</span>
+          ) : error ? (
+            <span>{error}</span>
+          ) : (
+            <span>
+              <span id="payment-name">{remainderData["due-payment-name"]}</span>
+              &nbsp;of&nbsp;
+              <span id="payment-currency-type" className="font-bold">
+                {remainderData["currency-type"]}
+              </span>
+              <span id="payment-amount">
+                {parseInt(remainderData["due-amount"]).toLocaleString()}
+              </span>
+              &nbsp;is due in&nbsp;
+              <span id="due-days-left">{remainderData["due-days-left"]}</span>
+              &nbsp;days. Ensure sufficient wallet balance to avoid failed
+              payments.
+            </span>
+          )}
+        </div>
+        <button className="border px-5 py-2 rounded-[5px] border-[#0000002d] bg-[#ffa60064] cursor-pointer hover:bg-[#ffa60079] hover:text-black transition duration-200">Snooze</button>
       </div>
     );
   }
   //#endregion
 
   function OverViewContainer() {
-    return <div className="border h-40"></div>;
+    class OverViewContainerData {
+      constructor(icon, title, amount, exclusiveComments, differentColour) {
+        this.icon = icon;
+        this.title = title;
+        this.amount = amount;
+        this.exclusiveComments = exclusiveComments;
+        this.differentColour = differentColour;
+      }
+      createElement(key) {
+        return (
+          <div
+            key={key}
+            id="item"
+            style={{ "--i": key + 1 }}
+            className="border bg-white flex flex-col border-[#05050528] rounded-[15px] flex-1 p-4 transform hover:translate-y-[5px] duration-200"
+          >
+            <span
+              style={{ "--i": 1 }}
+              id="icon"
+              className={`h-[35px] mb-2 w-[35px] flex items-center rounded-[4px] justify-center text-[20px] ${this.differentColour ? "bg-[#ffa60031] text-(--amber)" : "bg-[#00800034] text-(--g400)"}`}
+            >
+              {this.icon}
+            </span>
+            <p
+              style={{ "--i": 2 }}
+              className="uppercase tracking-[2px] text-[#00000079] text-[12px]"
+            >
+              {this.title}
+            </p>
+            <p
+              style={{ "--i": 3 }}
+              id="amount"
+              className="font-(family-name:--font-display) text-[28px]"
+            >
+              {this.amount}
+            </p>
+            <p
+              style={{ "--i": 4 }}
+              id="comment"
+              className="text-[12px] text-[#0000004d]"
+            >
+              {this.exclusiveComments}
+            </p>
+          </div>
+        );
+      }
+    }
+
+    const [currencyType, setCurrencyType] = useState("$");
+
+    const [dueThisWeekAmount, setDueThisWeekAmount] = useState(0);
+    const [numberOfPendingPayments, setNumberOfPendingPayments] = useState(0);
+
+    const [walletBalance, setWalletBalance] = useState(0);
+    const [isBalanceSufficient, setIsBalanceSufficient] = useState(false);
+
+    const [automationsCompletedThisMonth, setAutomationCompletedThisMonth] =
+      useState(0);
+    const [paidAmount, setPaidAmount] = useState(0);
+
+    const [savingRate, setSavingRate] = useState(0);
+    const [percentageFromLastMonth, setPercentageFromLastMonth] = useState(0);
+    const [isSavingIncreasing, setIsSavingIncreasing] = useState(false);
+
+    function exclusiveCommentCreator(type) {
+      switch (type) {
+        case "dueThisWeek":
+          return `${parseInt(numberOfPendingPayments).toLocaleString()} payments pending`;
+        case "walletBalance":
+          if (!isBalanceSufficient) {
+            return (
+              <span className="text-red-600 flex gap-2 items-center">
+                Not Sufficient{" "}
+                <span id="icon" className="text-[12px]">
+                  {icons.close}
+                </span>
+              </span>
+            );
+          } else {
+            return (
+              <span className="text-(--g400) flex gap-2 items-center">
+                Sufficient{" -"}
+                <span id="icon" className="text-[12px]">
+                  {icons.check}
+                </span>
+              </span>
+            );
+          }
+        case "paidAmount":
+          return `${currencyType}${parseInt(paidAmount).toLocaleString()} paid`;
+        case "savingRate":
+          if (!isSavingIncreasing) {
+            return (
+              <span className="text-red-600 flex gap-2 items-center">
+                <span id="icon" className="text-[12px]">
+                  {icons.down}
+                </span>{" "}
+                {percentageFromLastMonth}% from last month
+              </span>
+            );
+          } else {
+            return (
+              <span className="text-(--g400) flex gap-2 items-center">
+                <span id="icon" className="text-[12px]">
+                  {icons.up}
+                </span>{" "}
+                {percentageFromLastMonth}% from last month
+              </span>
+            );
+          }
+      }
+    }
+
+    const [OverViewContainerElements, setOverViewContainerElements] = useState(
+      [],
+    );
+
+    async function getDatas() {
+      try {
+        setCurrencyType("$");
+        setDueThisWeekAmount(405230);
+        setNumberOfPendingPayments(4);
+        setWalletBalance(6000);
+        setIsBalanceSufficient(true);
+        setAutomationCompletedThisMonth(9);
+        setPaidAmount(100000);
+        setSavingRate(20);
+        setPercentageFromLastMonth(4);
+        setIsSavingIncreasing(true);
+        return true;
+      } catch (err) {
+        return false;
+      }
+    }
+    useEffect(() => {
+      async function loadData() {
+        try {
+          await getDatas();
+          const OverViewContainerDatas = [
+            {
+              icon: icons.star,
+              title: "due this week",
+              amount:
+                currencyType + parseInt(dueThisWeekAmount).toLocaleString(),
+              exclusiveComments: exclusiveCommentCreator("dueThisWeek"),
+              differentColour: false,
+            },
+            {
+              icon: icons.gift,
+              title: "wallet balance",
+              amount: currencyType + parseInt(walletBalance).toLocaleString(),
+              exclusiveComments: exclusiveCommentCreator("walletBalance"),
+              differentColour: false,
+            },
+            {
+              icon: icons.checker,
+              title: "completed this month",
+              amount: parseInt(automationsCompletedThisMonth).toLocaleString(),
+              exclusiveComments: exclusiveCommentCreator("paidAmount"),
+              differentColour: true,
+            },
+            {
+              icon: icons.stat,
+              title: "savings rate",
+              amount: savingRate,
+              exclusiveComments: exclusiveCommentCreator("savingRate"),
+              differentColour: false,
+            },
+          ];
+
+          setOverViewContainerElements(
+            OverViewContainerDatas.map((el, i) =>
+              new OverViewContainerData(
+                el.icon,
+                el.title,
+                el.amount,
+                el.exclusiveComments,
+                el.differentColour,
+              ).createElement(i),
+            ),
+          );
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      loadData();
+    }, [
+      currencyType,
+      dueThisWeekAmount,
+      walletBalance,
+      automationsCompletedThisMonth,
+      savingRate,
+    ]);
+
+    return (
+      <div id="over-view-container" className="flex gap-4">
+        {OverViewContainerElements.map((el) => el)}
+      </div>
+    );
   }
 
   return (

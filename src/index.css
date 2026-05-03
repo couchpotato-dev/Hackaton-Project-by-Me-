@@ -20,6 +20,7 @@
 
 body {
   font-family: var(--font-body);
+  background-color: #f1f1f1;
 }
 
 #hero-section {
@@ -51,8 +52,26 @@ body {
   transform: translateX(30px);
   filter: blur(10px);
   opacity: 0.5;
-  animation: peekABoo 0.25s ease 1 forwards normal;
+  animation: peekABoo 0.5s ease 1 forwards normal;
   animation-delay: calc(var(--i) * 0.05s);
+}
+
+#over-view-container #item {
+  transition: 0.5s;
+  transform: translateY(30px);
+  filter: blur(10px);
+  opacity: 0.5;
+  animation: peekABoo 0.25s ease 1 forwards normal;
+  animation-delay: calc(var(--i) * 0.15s);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.108);
+
+  * {
+    transform: translateY(30px);
+    filter: blur(10px);
+    opacity: 0.5;
+    animation: peekABoo 0.25s ease 1 forwards normal;
+    animation-delay: calc(var(--i) * 0.15s);
+  }
 }
 
 @keyframes peekABoo {
