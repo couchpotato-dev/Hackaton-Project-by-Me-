@@ -393,7 +393,9 @@ function Home() {
             </span>
           )}
         </div>
-        <button className="border px-5 py-2 rounded-[5px] border-[#0000002d] bg-[#ffa60064] cursor-pointer hover:bg-[#ffa60079] hover:text-black transition duration-200">Snooze</button>
+        <button className="border px-5 py-2 rounded-[5px] border-[#0000002d] bg-[#ffa60064] cursor-pointer hover:bg-[#ffa60079] hover:text-black transition duration-200">
+          Snooze
+        </button>
       </div>
     );
   }
@@ -448,7 +450,7 @@ function Home() {
       }
     }
 
-    const [currencyType, setCurrencyType] = useState("$");
+    const [CT, setCurrencyType] = useState("$");
 
     const [dueThisWeekAmount, setDueThisWeekAmount] = useState(0);
     const [numberOfPendingPayments, setNumberOfPendingPayments] = useState(0);
@@ -489,7 +491,7 @@ function Home() {
             );
           }
         case "paidAmount":
-          return `${currencyType}${parseInt(paidAmount).toLocaleString()} paid`;
+          return `${CT}${parseInt(paidAmount).toLocaleString()} paid`;
         case "savingRate":
           if (!isSavingIncreasing) {
             return (
@@ -542,15 +544,14 @@ function Home() {
             {
               icon: icons.star,
               title: "due this week",
-              amount:
-                currencyType + parseInt(dueThisWeekAmount).toLocaleString(),
+              amount: CT + parseInt(dueThisWeekAmount).toLocaleString(),
               exclusiveComments: exclusiveCommentCreator("dueThisWeek"),
               differentColour: false,
             },
             {
               icon: icons.gift,
               title: "wallet balance",
-              amount: currencyType + parseInt(walletBalance).toLocaleString(),
+              amount: CT + parseInt(walletBalance).toLocaleString(),
               exclusiveComments: exclusiveCommentCreator("walletBalance"),
               differentColour: false,
             },
@@ -587,7 +588,7 @@ function Home() {
       }
       loadData();
     }, [
-      currencyType,
+      CT,
       dueThisWeekAmount,
       walletBalance,
       automationsCompletedThisMonth,
@@ -646,14 +647,20 @@ function Wrapper() {
 //#region App
 function App() {
   return (
+    // <Routes>
+    //   <Route element={<Wrapper />}>
+    //     <Route index element={<Home />} />
+    //     <Route path="/dashboard" element={<Dashboard />} />
+    //     <Route path="/history" element={<History />} />
+    //     <Route path="/scheduler" element={<Scheduler />} />
+    //     <Route path="/prototype" element={<PayFlow_v1 />} />
+    //   </Route>
+    // </Routes>
     <Routes>
-      <Route element={<Wrapper />}>
-        <Route index element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/scheduler" element={<Scheduler />} />
-        <Route path="/prototype" element={<PayFlow_v1 />} />
-      </Route>
+      <Route index element={<PayFlow_v1 />} /> /* due to inconvinence and
+      personal problems, the project has been halted and hence been used the ai
+      generated prototype, it may contain some styling yet you can know its ai
+      */
     </Routes>
   );
 }
