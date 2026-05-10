@@ -891,12 +891,12 @@ function HomePage({ onNav, showToast }) {
         </div>
         <div className="hero-stats">
           <div>
-            <div className="hero-stat-val">₦241,500</div>
+            <div className="hero-stat-val">NRP. 241,500</div>
             <div className="hero-stat-label">Scheduled This Month</div>
           </div>
           <div className="hero-stat-divider" />
           <div>
-            <div className="hero-stat-val">₦156,200</div>
+            <div className="hero-stat-val">NRP. 156,200</div>
             <div className="hero-stat-label">Paid So Far</div>
           </div>
           <div className="hero-stat-divider" />
@@ -921,7 +921,7 @@ function HomePage({ onNav, showToast }) {
       <div className="alert-strip">
         <AlertIcon />
         <div className="alert-strip-text">
-          <strong>Reminder:</strong> DSTV Subscription of ₦8,500 is due in 2
+          <strong>Reminder:</strong> DSTV Subscription of NRP. 8,500 is due in 2
           days. Ensure sufficient wallet balance to avoid failed payments.
         </div>
         <button
@@ -936,13 +936,13 @@ function HomePage({ onNav, showToast }) {
         {[
           {
             label: "Due This Week",
-            val: "₦58,500",
+            val: "NRP. 58,500",
             sub: "3 payments pending",
             icon: <StarIcon />,
           },
           {
             label: "Wallet Balance",
-            val: "₦187,400",
+            val: "NRP. 187,400",
             sub: "Sufficient ✓",
             subClass: "up",
             icon: <WalletIcon />,
@@ -950,7 +950,7 @@ function HomePage({ onNav, showToast }) {
           {
             label: "Completed This Month",
             val: "8",
-            sub: "₦156,200 paid",
+            sub: "NRP. 156,200 paid",
             icon: <CheckCircleIcon />,
           },
           {
@@ -1003,7 +1003,7 @@ function HomePage({ onNav, showToast }) {
               detail: "Monthly · Digital Wallet",
               badgeVariant: "amber",
               badgeText: "Due Soon",
-              amount: "₦15,000",
+              amount: "NRP. 15,000",
               due: "May 1, 2026",
             },
             {
@@ -1013,7 +1013,7 @@ function HomePage({ onNav, showToast }) {
               detail: "Monthly · Auto-debit",
               badgeVariant: "red",
               badgeText: "2 Days",
-              amount: "₦8,500",
+              amount: "NRP. 8,500",
               due: "Apr 28, 2026",
             },
             {
@@ -1021,7 +1021,7 @@ function HomePage({ onNav, showToast }) {
               bg: "#e3f2fd",
               name: "School Fees – 3rd Term",
               detail: "Termly · Bank Transfer",
-              amount: "₦120,000",
+              amount: "NRP. 120,000",
               due: "May 3, 2026",
             },
             {
@@ -1029,7 +1029,7 @@ function HomePage({ onNav, showToast }) {
               bg: "#fce4ec",
               name: "GTBank Loan Repayment",
               detail: "Monthly · Auto-debit",
-              amount: "₦35,000",
+              amount: "NRP. 35,000",
               due: "May 5, 2026",
             },
             {
@@ -1037,7 +1037,7 @@ function HomePage({ onNav, showToast }) {
               bg: "#f3e5f5",
               name: "MTN Data Plan",
               detail: "Monthly · Airtime",
-              amount: "₦5,000",
+              amount: "NRP. 5,000",
               due: "May 7, 2026",
             },
           ].map((p, i) => (
@@ -1072,10 +1072,10 @@ function HomePage({ onNav, showToast }) {
           <div className="card">
             <div className="section-label">Wallet Health Check</div>
             {[
-              { label: "Available Balance", val: "₦187,400", valStyle: {} },
+              { label: "Available Balance", val: "NRP. 187,400", valStyle: {} },
               {
                 label: "Scheduled Outflow",
-                val: "— ₦183,500",
+                val: "— NRP. 183,500",
                 valStyle: { color: "var(--amber)" },
               },
             ].map((r, i) => (
@@ -1114,7 +1114,7 @@ function HomePage({ onNav, showToast }) {
               <span
                 style={{ fontSize: 14, fontWeight: 600, color: "var(--g500)" }}
               >
-                ₦3,900
+                NRP. 3,900
               </span>
             </div>
             <div
@@ -1166,26 +1166,26 @@ function DashboardPage({ showToast }) {
         {[
           {
             label: "Total Scheduled",
-            val: "₦241,500",
+            val: "NRP. 241,500",
             sub: "12 active plans",
             border: "var(--g500)",
           },
           {
             label: "Paid This Month",
-            val: "₦156,200",
+            val: "NRP. 156,200",
             sub: "↑ 12% vs last month",
             subClass: "up",
             border: "var(--g400)",
           },
           {
             label: "Pending",
-            val: "₦85,300",
+            val: "NRP. 85,300",
             sub: "4 payments left",
             border: "var(--amber)",
           },
           {
             label: "Overdue",
-            val: "₦0",
+            val: "NRP. 0",
             sub: "All clear ✓",
             subClass: "up",
             border: "var(--red)",
@@ -1245,17 +1245,17 @@ function DashboardPage({ showToast }) {
                 ))}
               </svg>
               <div className="donut-center">
-                <div className="donut-center-val">₦241k</div>
+                <div className="donut-center-val">NRP. 241k</div>
                 <div className="donut-center-label">Total</div>
               </div>
             </div>
             <div style={{ flex: 1 }}>
               {[
-                { color: "#1e6e3f", name: "School Fees", amount: "₦120k" },
-                { color: "#4caf78", name: "Loans", amount: "₦35k" },
-                { color: "#c8973a", name: "Utilities", amount: "₦27k" },
-                { color: "#e67e22", name: "Subscriptions", amount: "₦15k" },
-                { color: "#c0392b", name: "Others", amount: "₦9.5k" },
+                { color: "#1e6e3f", name: "School Fees", amount: "NRP. 120k" },
+                { color: "#4caf78", name: "Loans", amount: "NRP. 35k" },
+                { color: "#c8973a", name: "Utilities", amount: "NRP. 27k" },
+                { color: "#e67e22", name: "Subscriptions", amount: "NRP. 15k" },
+                { color: "#c0392b", name: "Others", amount: "NRP. 9.5k" },
               ].map((c, i) => (
                 <div key={i} className="category-item">
                   <div
@@ -1316,7 +1316,7 @@ function DashboardPage({ showToast }) {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      ₦241k
+                      NRP. 241k
                     </div>
                   )}
                 </div>
@@ -1339,9 +1339,9 @@ function DashboardPage({ showToast }) {
               marginTop: 10,
             }}
           >
-            <span style={{ fontSize: 12, color: "var(--text-hint)" }}>₦0</span>
+            <span style={{ fontSize: 12, color: "var(--text-hint)" }}>NRP. 0</span>
             <span style={{ fontSize: 12, color: "var(--text-hint)" }}>
-              ₦300k
+              NRP. 300k
             </span>
           </div>
         </div>
@@ -1381,7 +1381,7 @@ function DashboardPage({ showToast }) {
                   color: "var(--g600)",
                 }}
               >
-                ₦8,500
+                NRP. 8,500
               </div>
               <button
                 className="btn btn-primary btn-sm"
@@ -1400,7 +1400,7 @@ function DashboardPage({ showToast }) {
                 icon: "⚡",
                 bg: "#e8f5e9",
                 name: "Electricity (EKEDC)",
-                date: "May 1 · ₦15,000",
+                date: "May 1 · NRP. 15,000",
                 days: "5 days",
                 daysColor: "var(--amber)",
               },
@@ -1408,7 +1408,7 @@ function DashboardPage({ showToast }) {
                 icon: "🏫",
                 bg: "#e3f2fd",
                 name: "School Fees",
-                date: "May 3 · ₦120,000",
+                date: "May 3 · NRP. 120,000",
                 days: "7 days",
                 daysColor: "var(--amber)",
               },
@@ -1416,7 +1416,7 @@ function DashboardPage({ showToast }) {
                 icon: "🏦",
                 bg: "#fce4ec",
                 name: "Loan Repayment",
-                date: "May 5 · ₦35,000",
+                date: "May 5 · NRP. 35,000",
                 days: "9 days",
                 daysColor: "var(--text)",
               },
@@ -1446,38 +1446,38 @@ function DashboardPage({ showToast }) {
             {[
               {
                 name: "School Fees",
-                val: "₦120,000",
+                val: "NRP. 120,000",
                 w: "49.7%",
                 color: "var(--g600)",
               },
               {
                 name: "Loan Repayment",
-                val: "₦35,000",
+                val: "NRP. 35,000",
                 w: "14.5%",
                 color: "var(--g500)",
               },
               {
                 name: "Utilities",
-                val: "₦27,000",
+                val: "NRP. 27,000",
                 w: "11.2%",
                 color: "var(--g400)",
               },
               {
                 name: "Internet (MTN)",
-                val: "₦18,000",
+                val: "NRP. 18,000",
                 w: "7.5%",
                 color: "var(--gold)",
               },
-              { name: "DSTV", val: "₦8,500", w: "3.5%", color: "var(--amber)" },
+              { name: "DSTV", val: "NRP. 8,500", w: "3.5%", color: "var(--amber)" },
               {
                 name: "Water Bill",
-                val: "₦6,000",
+                val: "NRP. 6,000",
                 w: "2.5%",
                 color: "var(--slate-md)",
               },
               {
                 name: "Other Subscriptions",
-                val: "₦5,000",
+                val: "NRP. 5,000",
                 w: "2.1%",
                 color: "var(--slate-md)",
               },
@@ -1512,7 +1512,7 @@ function DashboardPage({ showToast }) {
                 val: "98.2%",
                 valColor: "var(--g500)",
               },
-              { label: "Avg. Monthly Spend", val: "₦219k" },
+              { label: "Avg. Monthly Spend", val: "NRP. 219k" },
               { label: "Schedules Active", val: "12" },
             ].map((s, i) => (
               <div key={i}>
@@ -1564,7 +1564,7 @@ function HistoryPage({ showToast }) {
 
       <div className="summary-strip">
         {[
-          { val: "₦1,842,600", label: "Total Paid (All Time)" },
+          { val: "NRP. 1,842,600", label: "Total Paid (All Time)" },
           { val: "142", label: "Successful Payments", valColor: "var(--g500)" },
           { val: "3", label: "Failed / Retried", valColor: "var(--red)" },
           { val: "98.0%", label: "Success Rate", valColor: "var(--gold-dk)" },
@@ -1655,7 +1655,7 @@ function HistoryPage({ showToast }) {
                 <td
                   style={{ fontWeight: 600, fontFamily: "var(--font-display)" }}
                 >
-                  ₦{h.amount.toLocaleString()}
+                  NRP. {h.amount.toLocaleString()}
                 </td>
                 <td style={{ color: "var(--text-muted)" }}>{h.date}</td>
                 <td style={{ color: "var(--text-muted)" }}>{h.method}</td>
@@ -1867,9 +1867,9 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
             </div>
 
             <div className="form-group">
-              <label className="form-label">Amount (₦)</label>
+              <label className="form-label">Amount (NRP. )</label>
               <div className="amount-input-wrap">
-                <span className="amount-currency">₦</span>
+                <span className="amount-currency">NRP. </span>
                 <input
                   className="form-input amount-input"
                   type="number"
@@ -1961,7 +1961,7 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
                 Live Preview
               </div>
               <div className="preview-amount">
-                ₦
+                NRP. 
                 {amt
                   ? amt.toLocaleString("en-NG", { minimumFractionDigits: 2 })
                   : "0.00"}
@@ -2007,7 +2007,7 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
                     marginTop: 4,
                   }}
                 >
-                  ₦{annual ? annual.toLocaleString() : "0"}
+                  NRP. {annual ? annual.toLocaleString() : "0"}
                 </div>
                 <div
                   style={{
@@ -2017,7 +2017,7 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
                   }}
                 >
                   {amt
-                    ? `${mult}x per year = ₦${annual.toLocaleString()}`
+                    ? `${mult}x per year = NRP. ${annual.toLocaleString()}`
                     : "Enter amount and frequency to calculate"}
                 </div>
               </div>
@@ -2045,7 +2045,7 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
                   • Monthly schedules are best for utility bills.
                 </p>
                 <p>
-                  • Keep your wallet balance above ₦50,000 buffer before
+                  • Keep your wallet balance above NRP. 50,000 buffer before
                   auto-debit days.
                 </p>
               </div>
@@ -2105,7 +2105,7 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
                 <div
                   style={{ fontFamily: "var(--font-display)", fontSize: 18 }}
                 >
-                  ₦{s.amount.toLocaleString()}
+                  NRP. {s.amount.toLocaleString()}
                 </div>
                 <div
                   style={{
@@ -2193,7 +2193,7 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
                 {[
                   { key: "inApp", label: "In-App Notifications" },
                   { key: "email", label: "Email Reminders" },
-                  { key: "sms", label: "SMS Alerts (₦1.50/msg)" },
+                  { key: "sms", label: "SMS Alerts (NRP. 1.50/msg)" },
                   { key: "push", label: "Push Notifications" },
                   { key: "whatsapp", label: "WhatsApp Alerts (Beta)" },
                 ].map((t) => (
@@ -2319,9 +2319,9 @@ function SchedulerPage({ schedules, setSchedules, showToast }) {
               <input className="form-input" defaultValue={modalSchedule.name} />
             </div>
             <div className="form-group">
-              <label className="form-label">Amount (₦)</label>
+              <label className="form-label">Amount (NRP. )</label>
               <div className="amount-input-wrap">
-                <span className="amount-currency">₦</span>
+                <span className="amount-currency">NRP. </span>
                 <input
                   className="form-input amount-input"
                   type="number"
@@ -2403,7 +2403,7 @@ function NotifPanel() {
           dot: "var(--g400)",
           text: (
             <>
-              <strong>DSTV Subscription</strong> due in 2 days — ₦8,500
+              <strong>DSTV Subscription</strong> due in 2 days — NRP. 8,500
             </>
           ),
           time: "Just now",
@@ -2412,7 +2412,7 @@ function NotifPanel() {
           dot: "var(--g400)",
           text: (
             <>
-              <strong>Electricity Bill</strong> due in 5 days — ₦15,000
+              <strong>Electricity Bill</strong> due in 5 days — NRP. 15,000
             </>
           ),
           time: "1 hour ago",
@@ -2421,14 +2421,14 @@ function NotifPanel() {
           dot: "var(--amber)",
           text: (
             <>
-              <strong>School Fees (3rd Term)</strong> due in 7 days — ₦120,000
+              <strong>School Fees (3rd Term)</strong> due in 7 days — NRP. 120,000
             </>
           ),
           time: "3 hours ago",
         },
         {
           dot: "var(--text-hint)",
-          text: "Loan repayment processed successfully — ₦35,000",
+          text: "Loan repayment processed successfully — NRP. 35,000",
           time: "Yesterday",
         },
       ].map((n, i) => (
