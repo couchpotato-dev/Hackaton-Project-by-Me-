@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Footer from "./components/layout/Footer";
 import Navbar from "./components/layout/Navbar";
+import HomePage from "./pages/Home/HomePage";
 /* ─── design tokens ─── */
 const css = `
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
@@ -284,7 +285,24 @@ const css = `
   @media(max-width:900px){.grid-4{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}.pf-main{grid-template-columns:1fr 1fr}.form-row-3{grid-template-columns:1fr 1fr}}
   @media(max-width:600px){.container{padding:1rem}.nav{padding:0 1rem}.nav-tab span{display:none}.grid-4{grid-template-columns:1fr 1fr}.category-grid{grid-template-columns:repeat(3,1fr)}.hero-stats{gap:1rem}.hero-stat-val{font-size:22px}.form-row{grid-template-columns:1fr}.pf-main{grid-template-columns:1fr}.pf-newsletter{flex-direction:column}}
 `;
-
+const PlusIcon = () => (
+  <svg
+    width={15}
+    height={15}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="12" y1="5" x2="12" y2="19" />
+    <line x1="5" y1="12" x2="19" y2="12" />
+  </svg>
+);
+const Badge = ({ variant, children }) => (
+  <span className={`badge badge-${variant}`}>{children}</span>
+);
 /* ─── data ─── */
 const INITIAL_SCHEDULES = [
   {
@@ -589,93 +607,8 @@ const XIcon = () => (
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
 );
-const PlusIcon = () => (
-  <svg
-    width={15}
-    height={15}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="12" y1="5" x2="12" y2="19" />
-    <line x1="5" y1="12" x2="19" y2="12" />
-  </svg>
-);
-const AlertIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <line x1="12" y1="8" x2="12" y2="12" />
-    <line x1="12" y1="16" x2="12.01" y2="16" />
-  </svg>
-);
-const StarIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="var(--g500)"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-  </svg>
-);
-const WalletIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="var(--g500)"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polyline points="20 12 20 22 4 22 4 12" />
-    <rect x="2" y="7" width="20" height="5" />
-    <path d="M12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
-  </svg>
-);
-const CheckCircleIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="var(--amber)"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
-    <polyline points="22 4 12 14.01 9 11.01" />
-  </svg>
-);
-const BarsIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="var(--g500)"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <line x1="18" y1="20" x2="18" y2="10" />
-    <line x1="12" y1="20" x2="12" y2="4" />
-    <line x1="6" y1="20" x2="6" y2="14" />
-  </svg>
-);
 
 /* ─── mini components ─── */
-const Badge = ({ variant, children }) => (
-  <span className={`badge badge-${variant}`}>{children}</span>
-);
 
 const Toggle = ({ on, onClick }) => (
   <button className={`toggle${on ? " on" : ""}`} onClick={onClick} />
@@ -690,307 +623,6 @@ function Toast({ msg, onHide }) {
     <div className="toast">
       <CheckIcon />
       <span>{msg}</span>
-    </div>
-  );
-}
-
-/* ─── Calendar ─── */
-function MiniCalendar() {
-  const payDays = [1, 3, 5, 7, 10, 12, 15, 20];
-  const startDay = 5; // May 2026 starts Friday
-  const prevDays = Array.from({ length: startDay }, (_, i) => ({
-    day: 25 + i,
-    type: "past",
-  }));
-  const days = Array.from({ length: 31 }, (_, i) => {
-    const d = i + 1;
-    return {
-      day: d,
-      type: d === 1 ? "today" : payDays.includes(d) ? "has-payment" : "",
-    };
-  });
-  return (
-    <div>
-      <div className="mini-cal-grid">
-        {["S", "M", "T", "W", "T", "F", "S"].map((n, i) => (
-          <div key={i} className="mini-cal-day-name">
-            {n}
-          </div>
-        ))}
-      </div>
-      <div className="mini-cal-grid" style={{ marginTop: 2 }}>
-        {prevDays.map((d, i) => (
-          <div key={i} className="mini-cal-day past">
-            {d.day}
-          </div>
-        ))}
-        {days.map((d) => (
-          <div key={d.day} className={`mini-cal-day ${d.type}`}>
-            {d.day}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ─── HOME PAGE ─── */
-function HomePage({ onNav, showToast }) {
-  return (
-    <div className="container page-enter">
-      <div className="hero-banner" style={{ position: "relative" }}>
-        <div className="hero-greeting">Good morning 👋</div>
-        <div className="hero-name">
-          Welcome back, <em>Adaeze</em>
-        </div>
-        <div style={{ color: "rgba(255,255,255,.7)", fontSize: 14 }}>
-          Your finances are on track. 3 payments due this week.
-        </div>
-        <div className="hero-stats">
-          <div>
-            <div className="hero-stat-val">NRP. 241,500</div>
-            <div className="hero-stat-label">Scheduled This Month</div>
-          </div>
-          <div className="hero-stat-divider" />
-          <div>
-            <div className="hero-stat-val">NRP. 156,200</div>
-            <div className="hero-stat-label">Paid So Far</div>
-          </div>
-          <div className="hero-stat-divider" />
-          <div>
-            <div className="hero-stat-val">12</div>
-            <div className="hero-stat-label">Active Schedules</div>
-          </div>
-        </div>
-        <div className="hero-cta">
-          <button
-            className="btn-hero-primary"
-            onClick={() => onNav("scheduler")}
-          >
-            <PlusIcon /> New Schedule
-          </button>
-          <button className="btn-hero-ghost" onClick={() => onNav("dashboard")}>
-            View Dashboard →
-          </button>
-        </div>
-      </div>
-
-      <div className="alert-strip">
-        <AlertIcon />
-        <div className="alert-strip-text">
-          <strong>Reminder:</strong> DSTV Subscription of NRP. 8,500 is due in 2
-          days. Ensure sufficient wallet balance to avoid failed payments.
-        </div>
-        <button
-          className="btn btn-ghost btn-sm"
-          onClick={() => showToast("DSTV payment reminder snoozed for 1 day")}
-        >
-          Snooze
-        </button>
-      </div>
-
-      <div className="grid-4" style={{ marginBottom: "2rem" }}>
-        {[
-          {
-            label: "Due This Week",
-            val: "NRP. 58,500",
-            sub: "3 payments pending",
-            icon: <StarIcon />,
-          },
-          {
-            label: "Wallet Balance",
-            val: "NRP. 187,400",
-            sub: "Sufficient ✓",
-            subClass: "up",
-            icon: <WalletIcon />,
-          },
-          {
-            label: "Completed This Month",
-            val: "8",
-            sub: "NRP. 156,200 paid",
-            icon: <CheckCircleIcon />,
-          },
-          {
-            label: "Savings Rate",
-            val: "34%",
-            sub: "↑ 4% from last month",
-            subClass: "up",
-            icon: <BarsIcon />,
-          },
-        ].map((s, i) => (
-          <div key={i} className="stat-card">
-            <div
-              className="stat-card-icon"
-              style={{
-                background: i === 2 ? "var(--amber-lt)" : "var(--g100)",
-              }}
-            >
-              {s.icon}
-            </div>
-            <div className="stat-card-label">{s.label}</div>
-            <div className="stat-card-val">{s.val}</div>
-            <div className={`stat-card-sub ${s.subClass || ""}`}>{s.sub}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid-2">
-        <div className="card">
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "1rem",
-            }}
-          >
-            <div className="section-label">Upcoming Payments</div>
-            <button
-              className="btn btn-outline btn-sm"
-              onClick={() => onNav("scheduler")}
-            >
-              View All
-            </button>
-          </div>
-          {[
-            {
-              icon: "⚡",
-              bg: "#e8f5e9",
-              name: "Electricity Bill (EKEDC)",
-              detail: "Monthly · Digital Wallet",
-              badgeVariant: "amber",
-              badgeText: "Due Soon",
-              amount: "NRP. 15,000",
-              due: "May 1, 2026",
-            },
-            {
-              icon: "📺",
-              bg: "#fff3e0",
-              name: "DSTV Subscription",
-              detail: "Monthly · Auto-debit",
-              badgeVariant: "red",
-              badgeText: "2 Days",
-              amount: "NRP. 8,500",
-              due: "Apr 28, 2026",
-            },
-            {
-              icon: "🏫",
-              bg: "#e3f2fd",
-              name: "School Fees – 3rd Term",
-              detail: "Termly · Bank Transfer",
-              amount: "NRP. 120,000",
-              due: "May 3, 2026",
-            },
-            {
-              icon: "🏦",
-              bg: "#fce4ec",
-              name: "GTBank Loan Repayment",
-              detail: "Monthly · Auto-debit",
-              amount: "NRP. 35,000",
-              due: "May 5, 2026",
-            },
-            {
-              icon: "📱",
-              bg: "#f3e5f5",
-              name: "MTN Data Plan",
-              detail: "Monthly · Airtime",
-              amount: "NRP. 5,000",
-              due: "May 7, 2026",
-            },
-          ].map((p, i) => (
-            <div key={i} className="upcoming-item">
-              <div className="pay-icon" style={{ background: p.bg }}>
-                {p.icon}
-              </div>
-              <div className="pay-meta">
-                <div className="pay-name">{p.name}</div>
-                <div className="pay-detail">
-                  {p.detail}
-                  {p.badgeText && (
-                    <Badge variant={p.badgeVariant}>{p.badgeText}</Badge>
-                  )}
-                </div>
-              </div>
-              <div>
-                <div className="pay-amount">{p.amount}</div>
-                <div className="pay-due">{p.due}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div
-          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
-        >
-          <div className="card">
-            <div className="section-label">Payment Calendar — May 2026</div>
-            <MiniCalendar />
-          </div>
-          <div className="card">
-            <div className="section-label">Wallet Health Check</div>
-            {[
-              { label: "Available Balance", val: "NRP. 187,400", valStyle: {} },
-              {
-                label: "Scheduled Outflow",
-                val: "— NRP. 183,500",
-                valStyle: { color: "var(--amber)" },
-              },
-            ].map((r, i) => (
-              <div
-                key={i}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 6,
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 13,
-                    color: i ? "var(--text-muted)" : undefined,
-                  }}
-                >
-                  {r.label}
-                </span>
-                <span style={{ fontSize: 13, fontWeight: 600, ...r.valStyle }}>
-                  {r.val}
-                </span>
-              </div>
-            ))}
-            <div
-              style={{
-                height: 1,
-                background: "var(--border)",
-                margin: "10px 0",
-              }}
-            />
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 14, fontWeight: 600 }}>
-                Projected Balance
-              </span>
-              <span
-                style={{ fontSize: 14, fontWeight: 600, color: "var(--g500)" }}
-              >
-                NRP. 3,900
-              </span>
-            </div>
-            <div
-              style={{
-                background: "var(--amber-lt)",
-                border: "1px solid rgba(230,126,34,.3)",
-                borderRadius: 8,
-                padding: "10px 12px",
-                marginTop: 12,
-                fontSize: 13,
-                color: "#7a4a0a",
-              }}
-            >
-              ⚠️ Balance will be low after scheduled payments. Consider topping
-              up.
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
